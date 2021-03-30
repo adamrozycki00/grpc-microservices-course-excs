@@ -1,0 +1,11 @@
+syntax = "proto3";
+
+package model;
+
+option java_package = "com.tenetmind.person";
+option java_multiple_files = true;
+
+message Person {
+  string name = 1;
+  int32 age = 2;
+}
