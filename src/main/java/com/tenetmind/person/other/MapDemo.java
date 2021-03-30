@@ -2,6 +2,7 @@ package com.tenetmind.person.other;
 
 import com.tenetmind.person.Car;
 import com.tenetmind.person.Dealer;
+import com.tenetmind.person.Body_Style;
 
 public class MapDemo {
 
@@ -17,6 +18,7 @@ public class MapDemo {
                 .setMake("Honda")
                 .setModel("Civic")
                 .setYear(2016)
+                .setBodyStyle(Body_Style.SEDAN)
                 .build();
 
         Dealer dealer = Dealer.newBuilder()
@@ -26,9 +28,13 @@ public class MapDemo {
 
         System.out.println(dealer.getModelMap());
 
-        System.out.println(dealer.getModelOrDefault(2004, civic));
+        System.out.println(dealer.getModelOrDefault(2004, civic).getBodyStyle());
 
-        System.out.println(dealer.getModelOrThrow(2004)); //throws an error
+        try {
+            System.out.println(dealer.getModelOrThrow(2004));
+        } catch (Exception e) {
+            System.out.println("Throws an IllegalArgumentException");
+        }
     }
 
 }

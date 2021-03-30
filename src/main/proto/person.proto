@@ -5,6 +5,13 @@ package model;
 option java_package = "com.tenetmind.person";
 option java_multiple_files = true;
 
+enum Body_Style {
+  UNKNOWN = 0;
+  SEDAN = 1;
+  COUPE = 2;
+  SUV = 3;
+}
+
 message Address {
   int32 postBox = 1;
   string street = 2;
@@ -15,6 +22,7 @@ message Car {
   string make = 1;
   string model = 2;
   int32 year = 3;
+  Body_Style body_style = 4;
 }
 
 message Person {
