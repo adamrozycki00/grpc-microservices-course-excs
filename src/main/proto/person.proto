@@ -5,7 +5,21 @@ package model;
 option java_package = "com.tenetmind.person";
 option java_multiple_files = true;
 
+message Address {
+  int32 postBox = 1;
+  string street = 2;
+  string city = 3;
+}
+
+message Car {
+  string make = 1;
+  string model = 2;
+  int32 year = 3;
+}
+
 message Person {
   string name = 1;
   int32 age = 2;
+  Address address = 3;
+  repeated Car car = 4;
 }
