@@ -2,7 +2,7 @@ package com.tenetmind.person.other;
 
 import com.tenetmind.person.Car;
 import com.tenetmind.person.Dealer;
-import com.tenetmind.person.Body_Style;
+import com.tenetmind.person.BodyStyle;
 
 public class MapDemo {
 
@@ -18,7 +18,7 @@ public class MapDemo {
                 .setMake("Honda")
                 .setModel("Civic")
                 .setYear(2016)
-                .setBodyStyle(Body_Style.SEDAN)
+                .setBodyStyle(BodyStyle.SEDAN)
                 .build();
 
         Dealer dealer = Dealer.newBuilder()
