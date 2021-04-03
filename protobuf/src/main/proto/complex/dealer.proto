@@ -1,12 +1,12 @@
 syntax = "proto3";
 
-package model;
+package complex;
+
+import "common/car.proto";
 
 option java_package = "com.tenetmind.models";
 option java_multiple_files = true;
 
-message Address {
-  int32 postBox = 1;
-  string street = 2;
-  string city = 3;
+message Dealer {
+  map<int32, common.Car> model = 1;
 }

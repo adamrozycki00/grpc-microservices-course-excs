@@ -1,6 +1,6 @@
 syntax = "proto3";
 
-package model;
+package complex;
 
 import "common/car.proto";
 import "common/address.proto";
@@ -12,6 +12,5 @@ option java_multiple_files = true;
 message Person {
   string name = 1;
   google.protobuf.Int32Value age = 2;
-  Address address = 3;
-  repeated Car car = 4;
-}
+  common.Address address = 3;
+  repeated common.Car car = 4;}
