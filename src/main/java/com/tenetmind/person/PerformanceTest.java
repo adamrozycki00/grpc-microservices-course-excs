@@ -19,6 +19,7 @@ public class PerformanceTest {
 
             try {
                 byte[] bytes = mapper.writeValueAsBytes(jsonPerson);
+                System.out.println("JSON bytes: " + bytes.length);
                 JsonPerson jsonPerson1 = mapper.readValue(bytes, JsonPerson.class);
             } catch (Exception e) {
                 e.printStackTrace();
@@ -34,6 +35,7 @@ public class PerformanceTest {
         Runnable runnableProto = () -> {
             try {
                 byte[] bytes = protoPerson.toByteArray();
+                System.out.println("Protobuf bytes: " + bytes.length);
                 Person protoPerson1 = Person.parseFrom(bytes);
             } catch (InvalidProtocolBufferException e) {
                 e.printStackTrace();
@@ -41,22 +43,18 @@ public class PerformanceTest {
         };
 
         //test
-        for (int i = 0; i < 5; i++) {
-            runPerformanceTest(runnableJson, "JSON");
-            runPerformanceTest(runnableProto, "Protobuf");
-        }
+        runPerformanceTest(runnableJson, "JSON");
+        runPerformanceTest(runnableProto, "Protobuf");
     }
 
     private static void runPerformanceTest(Runnable runnable, String runnableType) {
         long startTime = System.currentTimeMillis();
 
-        for (int i = 0; i < 5_000_000; i++) {
-            runnable.run();
-        }
+        runnable.run();
 
         long endTime = System.currentTimeMillis();
 
-        System.out.println(runnableType + ": " + (endTime - startTime) / 1000d + " s");
+        System.out.println(runnableType + " time: " + (endTime - startTime) + " ms");
     }
 
 }
