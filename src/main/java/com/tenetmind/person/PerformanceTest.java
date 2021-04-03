@@ -1,6 +1,7 @@
 package com.tenetmind.person;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.google.protobuf.Int32Value;
 import com.google.protobuf.InvalidProtocolBufferException;
 import com.tenetmind.models.Person;
 
@@ -27,7 +28,7 @@ public class PerformanceTest {
         //protobuf
         Person protoPerson = Person.newBuilder()
                 .setName("Sam")
-                .setAge(10)
+                .setAge(Int32Value.newBuilder().setValue(10).build())
                 .build();
 
         Runnable runnableProto = () -> {

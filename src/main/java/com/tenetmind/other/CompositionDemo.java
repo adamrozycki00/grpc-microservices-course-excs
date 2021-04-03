@@ -1,5 +1,6 @@
 package com.tenetmind.other;
 
+import com.google.protobuf.Int32Value;
 import com.tenetmind.models.*;
 
 import java.util.List;
@@ -33,7 +34,7 @@ public class CompositionDemo {
 
         Person sam = Person.newBuilder()
                 .setName("Sam")
-                .setAge(25)
+                .setAge(Int32Value.newBuilder().setValue(25).build())
                 .addCar(volvo)
                 .addAllCar(List.of(accord, civic))
                 .setAddress(address)

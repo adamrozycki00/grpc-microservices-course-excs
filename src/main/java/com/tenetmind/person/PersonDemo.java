@@ -1,5 +1,6 @@
 package com.tenetmind.person;
 
+import com.google.protobuf.Int32Value;
 import com.tenetmind.models.*;
 
 import java.io.IOException;
@@ -12,7 +13,7 @@ public class PersonDemo {
     public static void main(String[] args) throws IOException {
         Person sam = Person.newBuilder()
                 .setName("Sam")
-                .setAge(10)
+                .setAge(Int32Value.newBuilder().setValue(10).build())
                 .build();
 
         Path samFile = Paths.get("sam.serial");
