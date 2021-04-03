@@ -1,8 +1,6 @@
 package com.tenetmind.person.other;
 
-import com.tenetmind.person.Car;
-import com.tenetmind.person.Dealer;
-import com.tenetmind.person.BodyStyle;
+import com.tenetmind.models.*;
 
 public class MapDemo {
 

@@ -1,6 +1,6 @@
 package com.tenetmind.person.client;
 
-import com.tenetmind.person.*;
+import com.tenetmind.models.*;
 
 import java.io.IOException;
 import java.nio.file.Files;

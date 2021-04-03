@@ -2,7 +2,7 @@ package com.tenetmind.person.json;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.protobuf.InvalidProtocolBufferException;
-import com.tenetmind.person.Person;
+import com.tenetmind.models.Person;
 
 public class PerformanceTest {
 

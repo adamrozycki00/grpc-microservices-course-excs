@@ -1,8 +1,6 @@
 package com.tenetmind.person.other;
 
-import com.tenetmind.person.Address;
-import com.tenetmind.person.Car;
-import com.tenetmind.person.Person;
+import com.tenetmind.models.*;
 
 import java.util.List;
 

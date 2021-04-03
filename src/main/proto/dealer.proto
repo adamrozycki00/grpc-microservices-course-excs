@@ -8,9 +8,6 @@ import "common/address.proto";
 option java_package = "com.tenetmind.models";
 option java_multiple_files = true;
 
-message Person {
-  string name = 1;
-  int32 age = 2;
-  Address address = 3;
-  repeated Car car = 4;
+message Dealer {
+  map<int32, Car> model = 1;
 }
