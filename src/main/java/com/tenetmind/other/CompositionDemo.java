@@ -1,4 +1,4 @@
-package com.tenetmind.person.other;
+package com.tenetmind.other;
 
 import com.tenetmind.models.*;
 

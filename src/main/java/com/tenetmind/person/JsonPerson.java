@@ -1,4 +1,4 @@
-package com.tenetmind.person.json;
+package com.tenetmind.person;
 
 public class JsonPerson {
 

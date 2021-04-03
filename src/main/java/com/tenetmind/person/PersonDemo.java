@@ -1,4 +1,4 @@
-package com.tenetmind.person.client;
+package com.tenetmind.person;
 
 import com.tenetmind.models.*;
 
@@ -7,7 +7,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
-public class PersonClient {
+public class PersonDemo {
 
     public static void main(String[] args) throws IOException {
         Person sam = Person.newBuilder()

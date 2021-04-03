@@ -1,4 +1,4 @@
-package com.tenetmind.person.json;
+package com.tenetmind.person;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.protobuf.InvalidProtocolBufferException;
