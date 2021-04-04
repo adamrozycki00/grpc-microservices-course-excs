@@ -11,7 +11,18 @@ message BalanceResponse {
   int32 balance = 1;
 }
 
+message WithdrawRequest {
+  int32 account_number = 1;
+  int32 amount = 2;
+}
+
+message MoneyResponse {
+  int32 amount = 1;
+}
+
 service BankService {
   rpc getBalance(BalanceCheckRequest) returns (BalanceResponse) {};
+
+  rpc withdraw(WithdrawRequest) returns (stream MoneyResponse) {};
 }
 

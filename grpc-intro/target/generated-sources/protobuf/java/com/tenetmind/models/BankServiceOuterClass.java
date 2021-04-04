@@ -24,6 +24,16 @@ public final class BankServiceOuterClass {
   static final 
     com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
       internal_static_BalanceResponse_fieldAccessorTable;
+  static final com.google.protobuf.Descriptors.Descriptor
+    internal_static_WithdrawRequest_descriptor;
+  static final 
+    com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+      internal_static_WithdrawRequest_fieldAccessorTable;
+  static final com.google.protobuf.Descriptors.Descriptor
+    internal_static_MoneyResponse_descriptor;
+  static final 
+    com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+      internal_static_MoneyResponse_fieldAccessorTable;
 
   public static com.google.protobuf.Descriptors.FileDescriptor
       getDescriptor() {
@@ -35,10 +45,13 @@ public final class BankServiceOuterClass {
     java.lang.String[] descriptorData = {
       "\n\022bank-service.proto\"-\n\023BalanceCheckRequ" +
       "est\022\026\n\016account_number\030\001 \001(\005\"\"\n\017BalanceRe" +
-      "sponse\022\017\n\007balance\030\001 \001(\0052E\n\013BankService\0226" +
-      "\n\ngetBalance\022\024.BalanceCheckRequest\032\020.Bal" +
-      "anceResponse\"\000B\030\n\024com.tenetmind.modelsP\001" +
-      "b\006proto3"
+      "sponse\022\017\n\007balance\030\001 \001(\005\"9\n\017WithdrawReque" +
+      "st\022\026\n\016account_number\030\001 \001(\005\022\016\n\006amount\030\002 \001" +
+      "(\005\"\037\n\rMoneyResponse\022\016\n\006amount\030\001 \001(\0052w\n\013B" +
+      "ankService\0226\n\ngetBalance\022\024.BalanceCheckR" +
+      "equest\032\020.BalanceResponse\"\000\0220\n\010withdraw\022\020" +
+      ".WithdrawRequest\032\016.MoneyResponse\"\0000\001B\030\n\024" +
+      "com.tenetmind.modelsP\001b\006proto3"
     };
     descriptor = com.google.protobuf.Descriptors.FileDescriptor
       .internalBuildGeneratedFileFrom(descriptorData,
@@ -56,6 +69,18 @@ public final class BankServiceOuterClass {
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_BalanceResponse_descriptor,
         new java.lang.String[] { "Balance", });
+    internal_static_WithdrawRequest_descriptor =
+      getDescriptor().getMessageTypes().get(2);
+    internal_static_WithdrawRequest_fieldAccessorTable = new
+      com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
+        internal_static_WithdrawRequest_descriptor,
+        new java.lang.String[] { "AccountNumber", "Amount", });
+    internal_static_MoneyResponse_descriptor =
+      getDescriptor().getMessageTypes().get(3);
+    internal_static_MoneyResponse_fieldAccessorTable = new
+      com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
+        internal_static_MoneyResponse_descriptor,
+        new java.lang.String[] { "Amount", });
   }
 
   // @@protoc_insertion_point(outer_class_scope)
