@@ -1,6 +1,7 @@
 package com.tenetmind.server;
 
 import com.tenetmind.models.*;
+import io.grpc.Status;
 import io.grpc.stub.StreamObserver;
 
 public class BankService extends BankServiceGrpc.BankServiceImplBase {
@@ -23,6 +24,13 @@ public class BankService extends BankServiceGrpc.BankServiceImplBase {
         final int amount = request.getAmount();
         final int balance = AccountDatabase.getBalance(accountNumber);
 
+        if (balance < amount) {
+            final Status status = Status.FAILED_PRECONDITION
+                    .withDescription("Not enough money. You have only " + balance);
+            responseObserver.onError(status.asRuntimeException());
+            return;
+        }
+
         for (int i = 0; i < (amount / 10); i++) {
             final MoneyResponse moneyResponse = MoneyResponse.newBuilder()
                     .setAmount(10)
@@ -30,14 +38,9 @@ public class BankService extends BankServiceGrpc.BankServiceImplBase {
 
             AccountDatabase.deductBalance(accountNumber, 10);
             responseObserver.onNext(moneyResponse);
-
-            try {
-                Thread.sleep(1000);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
         }
 
         responseObserver.onCompleted();
     }
+
 }
