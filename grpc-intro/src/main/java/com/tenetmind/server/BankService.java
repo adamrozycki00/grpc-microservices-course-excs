@@ -8,9 +8,9 @@ public class BankService extends BankServiceGrpc.BankServiceImplBase {
 
     @Override
     public void getBalance(BalanceCheckRequest request, StreamObserver<BalanceResponse> responseObserver) {
-        final int accountNumber = request.getAccountNumber();
+        int accountNumber = request.getAccountNumber();
 
-        final BalanceResponse response = BalanceResponse.newBuilder()
+        BalanceResponse response = BalanceResponse.newBuilder()
                 .setBalance(AccountDatabase.getBalance(accountNumber))
                 .build();
 
@@ -20,19 +20,19 @@ public class BankService extends BankServiceGrpc.BankServiceImplBase {
 
     @Override
     public void withdraw(WithdrawRequest request, StreamObserver<MoneyResponse> responseObserver) {
-        final int accountNumber = request.getAccountNumber();
-        final int amount = request.getAmount();
-        final int balance = AccountDatabase.getBalance(accountNumber);
+        int accountNumber = request.getAccountNumber();
+        int amount = request.getAmount();
+        int balance = AccountDatabase.getBalance(accountNumber);
 
         if (balance < amount) {
-            final Status status = Status.FAILED_PRECONDITION
+            Status status = Status.FAILED_PRECONDITION
                     .withDescription("Not enough money. You have only " + balance);
             responseObserver.onError(status.asRuntimeException());
             return;
         }
 
         for (int i = 0; i < (amount / 10); i++) {
-            final MoneyResponse moneyResponse = MoneyResponse.newBuilder()
+            MoneyResponse moneyResponse = MoneyResponse.newBuilder()
                     .setAmount(10)
                     .build();
 
@@ -43,4 +43,30 @@ public class BankService extends BankServiceGrpc.BankServiceImplBase {
         responseObserver.onCompleted();
     }
 
+    @Override
+    public StreamObserver<DepositRequest> cashDeposit(StreamObserver<BalanceResponse> responseObserver) {
+        return new StreamObserver<>() {
+            int accountBalance;
+
+            @Override
+            public void onNext(DepositRequest depositRequest) {
+                int accountNumber = depositRequest.getAccountNumber();
+                int amount = depositRequest.getAmount();
+                accountBalance = AccountDatabase.addBalance(accountNumber, amount);
+            }
+
+            @Override
+            public void onError(Throwable throwable) {
+            }
+
+            @Override
+            public void onCompleted() {
+                BalanceResponse balanceResponse = BalanceResponse.newBuilder()
+                        .setBalance(accountBalance)
+                        .build();
+                responseObserver.onNext(balanceResponse);
+                responseObserver.onCompleted();
+            }
+        };
+    }
 }

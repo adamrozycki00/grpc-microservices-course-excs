@@ -1,13 +1,11 @@
 package com.tenetmind.client;
 
 import com.google.common.util.concurrent.Uninterruptibles;
-import com.tenetmind.models.BalanceCheckRequest;
-import com.tenetmind.models.BalanceResponse;
-import com.tenetmind.models.BankServiceGrpc;
-import com.tenetmind.models.WithdrawRequest;
+import com.tenetmind.models.*;
 import io.grpc.ManagedChannel;
 import io.grpc.ManagedChannelBuilder;
 import io.grpc.StatusRuntimeException;
+import io.grpc.stub.StreamObserver;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
@@ -28,7 +26,7 @@ public class BankClientTest {
 
     @BeforeEach
     public void setup() {
-        final ManagedChannel channel = ManagedChannelBuilder.forAddress("localhost", 6565)
+        ManagedChannel channel = ManagedChannelBuilder.forAddress("localhost", 6565)
                 .usePlaintext()
                 .build();
 
@@ -39,12 +37,12 @@ public class BankClientTest {
     @Test
     public void balanceTest() {
         //given
-        final BalanceCheckRequest request = BalanceCheckRequest.newBuilder()
+        BalanceCheckRequest request = BalanceCheckRequest.newBuilder()
                 .setAccountNumber(7)
                 .build();
 
         //when
-        final BalanceResponse response = blockingStub.getBalance(request);
+        BalanceResponse response = blockingStub.getBalance(request);
         int balance = response.getBalance();
 
         //then
@@ -55,7 +53,7 @@ public class BankClientTest {
     @Test
     public void withdrawTest() {
         //given & when
-        final WithdrawRequest request = WithdrawRequest.newBuilder()
+        WithdrawRequest request = WithdrawRequest.newBuilder()
                 .setAccountNumber(7)
                 .setAmount(80)
                 .build();
@@ -73,23 +71,81 @@ public class BankClientTest {
     public void withdrawAsyncTest() {
         //given
         CountDownLatch latch = new CountDownLatch(1);
-        final WithdrawRequest request = WithdrawRequest.newBuilder()
+        WithdrawRequest request = WithdrawRequest.newBuilder()
                 .setAccountNumber(10)
                 .setAmount(50)
                 .build();
 
         //when
-        nonBlockingStub.withdraw(request, new MoneyStreamingResponse(latch));
+        nonBlockingStub.withdraw(request, new StreamObserver<>() {
+            @Override
+            public void onNext(MoneyResponse moneyResponse) {
+                System.out.println("Received async: " + moneyResponse.getAmount());
+            }
 
-        Uninterruptibles.sleepUninterruptibly(3, TimeUnit.SECONDS);
+            @Override
+            public void onError(Throwable throwable) {
+                System.out.println(throwable.getMessage());
+                latch.countDown();
+            }
 
-        final BalanceResponse balanceResponse = blockingStub.getBalance(
-                BalanceCheckRequest.newBuilder()
-                        .setAccountNumber(10)
-                        .build());
+            @Override
+            public void onCompleted() {
+                System.out.println("Server is done");
+                latch.countDown();
+            }
+        });
 
         //then
+        BalanceResponse balanceResponse = getBalanceResponse(10);
         assertEquals(50, balanceResponse.getBalance());
+    }
+
+    @Test
+    public void cashStreamingRequestTest() throws InterruptedException {
+        //given
+        CountDownLatch latch = new CountDownLatch(1);
+        StreamObserver<DepositRequest> requestObserver =
+                nonBlockingStub.cashDeposit(new StreamObserver<>() {
+                    @Override
+                    public void onNext(BalanceResponse balanceResponse) {
+                        System.out.println("Final balance: " + balanceResponse.getBalance());
+                    }
+
+                    @Override
+                    public void onError(Throwable throwable) {
+                        latch.countDown();
+                    }
+
+                    @Override
+                    public void onCompleted() {
+                        System.out.println("Server is done");
+                        latch.countDown();
+                    }
+                });
+
+        //when
+        for (int i = 0; i < 10; i++) {
+            DepositRequest depositRequest = DepositRequest.newBuilder()
+                    .setAccountNumber(8)
+                    .setAmount(10)
+                    .build();
+            requestObserver.onNext(depositRequest);
+        }
+        requestObserver.onCompleted();
+        latch.await();
+
+        //then
+        BalanceResponse balanceResponse = getBalanceResponse(8);
+        assertEquals(180, balanceResponse.getBalance());
+    }
+
+    private BalanceResponse getBalanceResponse(int accountNumber) {
+        Uninterruptibles.sleepUninterruptibly(3, TimeUnit.SECONDS);
+        return blockingStub.getBalance(
+                BalanceCheckRequest.newBuilder()
+                        .setAccountNumber(accountNumber)
+                        .build());
     }
 
 }

@@ -34,6 +34,11 @@ public final class BankServiceOuterClass {
   static final 
     com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
       internal_static_MoneyResponse_fieldAccessorTable;
+  static final com.google.protobuf.Descriptors.Descriptor
+    internal_static_DepositRequest_descriptor;
+  static final 
+    com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+      internal_static_DepositRequest_fieldAccessorTable;
 
   public static com.google.protobuf.Descriptors.FileDescriptor
       getDescriptor() {
@@ -47,11 +52,14 @@ public final class BankServiceOuterClass {
       "est\022\026\n\016account_number\030\001 \001(\005\"\"\n\017BalanceRe" +
       "sponse\022\017\n\007balance\030\001 \001(\005\"9\n\017WithdrawReque" +
       "st\022\026\n\016account_number\030\001 \001(\005\022\016\n\006amount\030\002 \001" +
-      "(\005\"\037\n\rMoneyResponse\022\016\n\006amount\030\001 \001(\0052w\n\013B" +
-      "ankService\0226\n\ngetBalance\022\024.BalanceCheckR" +
-      "equest\032\020.BalanceResponse\"\000\0220\n\010withdraw\022\020" +
-      ".WithdrawRequest\032\016.MoneyResponse\"\0000\001B\030\n\024" +
-      "com.tenetmind.modelsP\001b\006proto3"
+      "(\005\"\037\n\rMoneyResponse\022\016\n\006amount\030\001 \001(\005\"8\n\016D" +
+      "epositRequest\022\026\n\016account_number\030\001 \001(\005\022\016\n" +
+      "\006amount\030\002 \001(\0052\255\001\n\013BankService\0226\n\ngetBala" +
+      "nce\022\024.BalanceCheckRequest\032\020.BalanceRespo" +
+      "nse\"\000\0220\n\010withdraw\022\020.WithdrawRequest\032\016.Mo" +
+      "neyResponse\"\0000\001\0224\n\013cashDeposit\022\017.Deposit" +
+      "Request\032\020.BalanceResponse\"\000(\001B\030\n\024com.ten" +
+      "etmind.modelsP\001b\006proto3"
     };
     descriptor = com.google.protobuf.Descriptors.FileDescriptor
       .internalBuildGeneratedFileFrom(descriptorData,
@@ -81,6 +89,12 @@ public final class BankServiceOuterClass {
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_MoneyResponse_descriptor,
         new java.lang.String[] { "Amount", });
+    internal_static_DepositRequest_descriptor =
+      getDescriptor().getMessageTypes().get(4);
+    internal_static_DepositRequest_fieldAccessorTable = new
+      com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
+        internal_static_DepositRequest_descriptor,
+        new java.lang.String[] { "AccountNumber", "Amount", });
   }
 
   // @@protoc_insertion_point(outer_class_scope)
